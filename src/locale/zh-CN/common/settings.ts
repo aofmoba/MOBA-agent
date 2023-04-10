@@ -1,0 +1,23 @@
+export default {
+  'settings.title': '设置',
+  'settings.themeColor': '主题颜色',
+  'settings.content': '内容设置',
+  'settings.search': '搜索',
+  'settings.language': '语言',
+  'settings.navbar': '导航栏',
+  'settings.menuWidth': '菜单宽度（px）',
+  'settings.navbar.theme.toLight': '单击以使用灯光模式',
+  'settings.navbar.theme.toDark': '单击以使用暗模式',
+  'settings.navbar.alerts': '警报',
+  'settings.menu': '菜单',
+  'settings.footer': '页脚',
+  'settings.tabBar': 'tabBar',
+  'settings.otherSettings': '其他设置',
+  'settings.colorWeek': '色彩周',
+  'settings.alertContent':
+    '配置仅暂时有效后，如果您想真正影响项目，请单击下面的“复制设置”按钮，并在“设置”中替换settings.json.',
+  'settings.copySettings': '复制设置',
+  'settings.copySettings.message': '复制成功，请粘贴到文件 src/settings.json.',
+  'settings.close': '关闭',
+  'settings.color.tooltip': '根据主题颜色生成10种渐变色',
+};

@@ -1,0 +1,17 @@
+export default {
+  'financial.title': '财务统计',
+  'financial.trebate': '我的总分佣',
+  'financial.arebate': '已提现分佣',
+  'financial.wrebate': '未提现分佣',
+  'financial.table.title': '提现记录',
+  'financial.table.col1': '地址',
+  'financial.table.col2': '金额',
+  'financial.table.col3': '燃料',
+  'financial.table.col4': '状态',
+  'financial.table.col5': '更新时间',
+  'financial.table.col6': '操作',
+  'financial.table.col4.txt': '完成',
+  'financial.table.col6.txt': '详情',
+  'financial.withdrawn.pwd': '密码',
+  'financial.modal.title': '密码确认',
+};
