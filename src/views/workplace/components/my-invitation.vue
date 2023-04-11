@@ -60,9 +60,9 @@
                 </div>
                 <div class="link">
                   <a
-                    :href="`https://manager.cyberpop.online?code=` + curCode"
+                    :href="`https://node.aof.games?code=` + curCode"
                     target="view_window"
-                    >https://manager.cyberpop.online?code={{ curCode }}</a
+                    >https://node.aof.games?code={{ curCode }}</a
                   >
                 </div>
               </div>

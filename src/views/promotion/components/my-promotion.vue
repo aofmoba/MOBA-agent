@@ -26,12 +26,12 @@
                 <div class="num">
                   <a
                     :href="
-                      `https://manager.cyberpop.online?code=` +
+                      `https://node.aof.games?code=` +
                       codeInfo.quyuCode
                     "
                     target="view_window"
                   >
-                    https://manager.cyberpop.online?code={{ codeInfo.quyuCode }}
+                    https://node.aof.games?code={{ codeInfo.quyuCode }}
                   </a>
                 </div>
               </div>
@@ -82,29 +82,29 @@
                 <div class="num">
                   <a
                     :href="
-                      `https://manager.cyberpop.online?code=` +
+                      `https://node.aof.games?code=` +
                       codeInfo.quyuCode
                     "
                     target="view_window"
                   >
-                    https://manager.cyberpop.online?code={{ codeInfo.quyuCode }}
+                    https://node.aof.games?code={{ codeInfo.quyuCode }}
                   </a>
                 </div>
               </div>
             </div>
           </div>
-          <div v-if="!loading" class="item">
+          <!-- <div v-if="!loading" class="item"> -->
+          <div v-if="false" class="item">
             <div class="info">
               <div class="subitem">
                 <div class="label">{{ $t('promotion.purchase.link') }} :</div>
                 <div class="num">
                   <a
-                    :href="`https://dealers.cyberpop.online?code=${codeInfo.userCode}`"
+                    :href="`https://dealers.cyberpop.online${codeInfo.userCode ? '?code='+ codeInfo.userCode : ''}`"
                     target="view_window"
                   >
                     {{
-                      'https://dealers.cyberpop.online?code=' +
-                      codeInfo.userCode
+                      'https://dealers.cyberpop.online'+ (codeInfo.userCode ? '?code='+codeInfo.userCode : '')
                     }}
                   </a>
                 </div>
@@ -113,7 +113,7 @@
           </div>
           <a-skeleton
             v-if="
-              !codeInfo.userCode && !codeInfo.partnerCode && !codeInfo.quyuCode
+              !codeInfo.userCode && !codeInfo.partnerCode && !codeInfo.quyuCode && loading
             "
             :animation="true"
             :loading="loading"
@@ -177,8 +177,10 @@
           codeInfo.value.quyuCode = res.data.data.OneClass
             ? res.data.data.OneClass
             : '';
+        }else{
+          setLoading(false);
         }
-      });
+      })
   };
 
   onMounted(() => {

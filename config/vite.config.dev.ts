@@ -13,8 +13,8 @@ export default mergeConfig(
       host: '0.0.0.0',
       proxy: {
         '/api': {
-          target: 'https://invitecode.cyberpop.online/',
-          // target: 'https://weblogin.aof.games/',
+          // target: 'https://invitecode.cyberpop.online/',
+          target: 'https://weblogin.aof.games/',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
         },
