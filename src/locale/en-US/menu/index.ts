@@ -1,9 +1,9 @@
 export default {
   'menu.workplace': 'User Management',
   'menu.mywallet': 'My Wallet',
-  'menu.agent': 'Agent Management',
+  'menu.agent': 'Node Management',
   'menu.financial': 'Financial Statistics',
-  'menu.link': 'Promotion Link',
+  'menu.link': 'Node Registration',
   'menu.system': 'System Settings',
   'menu.purchase': 'Purchase',
   'menu.asset': 'Asset Overview',

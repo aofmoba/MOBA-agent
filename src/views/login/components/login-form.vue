@@ -21,14 +21,14 @@
         <div v-else>
           <!-- 已注册 -->
           <div v-if="[1, 2, 3, 4].includes(level)" class="login-type">
-            <div class="login-form-title"
-              >{{
+            <div class="login-form-title">
+              <!-- {{
                 userLevel
                   ? $t(userLevel) +
                     (level === 3 ? '(' + subLevel + ' Level)' : '')
                   : ''
-              }}
-              {{ nickna }}</div
+              }} -->
+              {{ $t(userLevel) }} {{ nickna }}</div
             >
             <div class="tips">{{ $t('login.connect.tips') }}</div>
           </div>

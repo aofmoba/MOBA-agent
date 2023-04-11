@@ -1,5 +1,5 @@
 export default {
-  'agent.title': '代理管理',
+  'agent.title': '节点管理',
   'agent.level0': '',
   'agent.level1': '巅峰节点', // 国家代理
   'agent.level2': '主节点', // 区域代理

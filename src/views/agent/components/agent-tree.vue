@@ -9,7 +9,10 @@
               v-if="level >= 3 && subLevel < 8"
               :class="levels == 4 ? 'active' : ''"
               @click="changeItem(4)"
-              >{{ $t('agent.level2')+ ( subLevel != -1 ? '('+ (subLevel+1)+' Level)' : '' ) }}</a-button
+              >
+              {{ $t('agent.level2') }}
+              <!-- {{ $t('agent.level2')+ ( subLevel != -1 ? '('+ (subLevel+1)+' Level)' : '' ) }} -->
+              </a-button
             >
             <a-button
               v-if="level >= 3"
@@ -60,7 +63,10 @@
                     data-index="total"
                   >
                   <template #cell="{ record }">
-                      <div v-if="record.countlevel3">{{ $t('agent.level2') + '('+(Number(record.subLevel)+1)+'Level)' }} : {{ record.countlevel3 }}</div>
+                      <div v-if="record.countlevel3">
+                        {{ $t('agent.level2') }}
+                        <!-- {{ $t('agent.level2') + '('+(Number(record.subLevel)+1)+'Level)' }} : {{ record.countlevel3 }} -->
+                      </div>
                       <div v-if="record.countlevel2">{{ $t('agent.level3') }} : {{ record.countlevel2 }}</div>
                       <div v-if="record.countlevel1">{{ $t('agent.level4') }} : {{ record.countlevel1 }}</div>
                       <div v-if="!record.countlevel3 && !record.countlevel2 && !record.countlevel1">{{ $t('workplace.table.nodata') }}</div>

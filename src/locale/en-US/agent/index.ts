@@ -1,9 +1,9 @@
 export default {
-  'agent.title': 'Agent Management',
+  'agent.title': 'Node Management',
   'agent.level0': '',
-  'agent.level1': 'State agent',
-  'agent.level2': 'Regional agent',
-  'agent.level3': 'Partner agent',
+  'agent.level1': 'Peak node',
+  'agent.level2': 'Master node',
+  'agent.level3': 'Guardian node',
   'agent.level4': 'Client user',
   'agent.level5': 'My details',
   'agent.btn.add': 'ADD',

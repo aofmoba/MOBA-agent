@@ -24,7 +24,8 @@
                 v-if="level >= 3 && subLevel < 8"
                 :class="levels == 4 ? 'active' : ''"
                 @click="changeItem(4)"
-                >{{ $t('agent.level2') + ( subLevel != -1 ? '-'+ (subLevel+1) : '') }}</a-button>
+                >{{ $t('agent.level2') }}</a-button>
+                <!-- >{{ $t('agent.level2') + ( subLevel != -1 ? '-'+ (subLevel+1) : '') }}</a-button> -->
               <a-button
                 v-if="level >= 3"
                 :class="levels == 3 ? 'active' : ''"
@@ -44,7 +45,10 @@
             <template #title>
               <div class="me">{{ $t('workplace.me') }} : {{ address }}</div>
               <div class="my-card-title">
-                <a-button type="outline" size="mini" style="min-width: 72px;height: 18px; line-height: 16px">{{ $t(userLevel) + (subLevel >= 1 ? '-'+subLevel : '') }}</a-button>
+                <a-button type="outline" size="mini" style="min-width: 72px;height: 18px; line-height: 16px">
+                  <!-- {{ $t(userLevel) + (subLevel >= 1 ? '-'+subLevel : '') }} -->
+                  {{ $t(userLevel) }}
+                </a-button>
                 <a-button type="primary" size="mini" style="min-width: 72px;height: 18px; line-height: 16px; margin-left: 12px;">{{ $t('agent.upgrade') }}</a-button>
                 <!-- <div class="useremail">
                   <span v-show="!switchInput2">{{ editInfo.oldEmail }}</span>

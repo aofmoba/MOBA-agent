@@ -65,7 +65,7 @@ export default {
   'login.update.succ': 'Password modified successfully',
   'login.update.err': 'Password modified failed',
   'login.update.pwdrule': 'Two types of numbers, letters and special characters, with 6-12 digits',
-  'login.connect.tips': 'Welcome to the dealer system!',
+  'login.connect.tips': 'Welcome to login!',
   'login.register.code': 'Invitation code',
   'login.register.tips': 'Congratulations on being invited to register as a dealer, click to register below!',
   'login.no.tips': 'Sorry, you have not been invited to become a dealer!',
