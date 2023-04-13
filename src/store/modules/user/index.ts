@@ -8,6 +8,7 @@ import {
 import { setToken, clearToken } from '@/utils/auth';
 import { removeRouteListener } from '@/utils/route-listener';
 import axios from 'axios';
+import Cookies from 'js-cookie'
 import { UserState } from './types';
 
 const useUserStore = defineStore('user', {
@@ -86,6 +87,8 @@ const useUserStore = defineStore('user', {
       localStorage.removeItem('userLl')
       localStorage.removeItem('userEm')
       localStorage.removeItem('address')
+      Cookies.remove('satoken', { domain: 'node.aof.games' })
+      Cookies.remove('user_login_com', { domain: 'aof.games' })
       this.resetInfo();
       clearToken();
       removeRouteListener();

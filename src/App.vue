@@ -13,7 +13,8 @@
   import { storeToRefs } from 'pinia';
   import useUser from '@/hooks/user';
   import { useRouter } from 'vue-router';
-
+  import Cookies from 'js-cookie'
+  
   export default defineComponent({
     components: {
       GlobalSetting,
@@ -32,6 +33,20 @@
             if( router.currentRoute.value.name === 'login' ) isRefresh.value = true;
             // logout();
           });
+        }
+
+        if( Cookies.get('user_login_com') ){
+          const exdata = JSON.parse(Cookies.get('user_login_com'))
+            // eslint-disable-next-line eqeqeq
+            if( exdata.address && exdata.level !== '1' ){
+              Cookies.set('satoken', exdata.satoken, { expires: 30, path: '', domain: 'node.aof.games' })
+              localStorage.setItem('userLl', exdata.level);
+              localStorage.setItem('userEm', exdata.email);
+              localStorage.setItem('address', exdata.address);
+              localStorage.setItem('isLogin', 'true');
+            }
+        } else if (Cookies.get('user_login_com') === undefined) {
+            logout()
         }
       });
       return {

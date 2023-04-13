@@ -11,7 +11,7 @@
           :heading="5"
           :style="{ margin: 0, fontSize: '18px' }"
         >
-        Arena of Faith Online X-Plan
+        Arena of Faith Online
         </a-typography-title>
         <icon-menu-fold
           v-if="appStore.device === 'mobile'"

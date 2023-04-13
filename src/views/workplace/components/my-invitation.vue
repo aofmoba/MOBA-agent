@@ -122,18 +122,18 @@
                       {{ record.addr ? record.addr : $t('workplace.table.nodata') }}
                     </template>
                   </a-table-column>
-                  <a-table-column
+                  <!-- <a-table-column
                     :title="$t('workplace.table.download')"
                     data-index="download"
-                  />
+                  /> -->
                   <a-table-column
                     :title="$t('workplace.table.ontime')"
                     data-index="duration"
                   />
-                  <a-table-column
+                  <!-- <a-table-column
                     :title="$t('workplace.table.game')"
                     data-index="gametime"
-                  />
+                  /> -->
                   <a-table-column
                     :title="$t('workplace.table.balance')"
                     data-index="balance"
@@ -287,13 +287,13 @@
   // switch code
   const changeCode = () =>{
     // eslint-disable-next-line eqeqeq
-    if( inCode.value.partnerCode && ( curCode.value == inCode.value.quyuCode ) ){
+    if( inCode.value.partnerCode && ( curCode.value == inCode.value.userCode ) ){
       curCode.value = inCode.value.partnerCode;
       btnContent.value = 'workplace.code2';
     // eslint-disable-next-line eqeqeq
-    }else if( inCode.value.quyuCode && ( curCode.value == inCode.value.partnerCode ) ){
-      curCode.value = inCode.value.quyuCode;
-      btnContent.value = 'workplace.code3';
+    }else if( inCode.value.userCode && ( curCode.value == inCode.value.partnerCode ) ){
+      curCode.value = inCode.value.userCode;
+      btnContent.value = 'workplace.code1';
     // eslint-disable-next-line eqeqeq
     }
   }

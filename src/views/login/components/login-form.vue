@@ -180,7 +180,7 @@
   import Web3 from 'web3/dist/web3.min.js';
   // import contracts from '@/utils/contracts';
   import bindWallet from '@/components/bind-wallet/index.vue';
-import { log } from 'console';
+  import Cookies from 'js-cookie'
 
   const router = useRouter();
   const { t } = useI18n();
@@ -449,6 +449,7 @@ import { log } from 'console';
                 localStorage.setItem('isLogin', 'true');
                 localStorage.setItem('userLl', result.data.data[0].level);
                 localStorage.setItem('userEm', result.data.data[0].email);
+                Cookies.set('user_login_com', JSON.stringify({satoken: Cookies.get('satoken'),email:result.data.data[0].email,address: result.data.data[0].address,level: result.data.data[0].level}), { expires: 30, path: '', domain: 'aof.games' })
                 if (!result.data.data[0].address) {
                   comStore.updateShowBind(true);
                 } else {
@@ -476,10 +477,12 @@ import { log } from 'console';
 
   onMounted(() => {
     invitCode.value = router.currentRoute.value.query.code;
-    localStorage.removeItem('isLogin');
-    localStorage.removeItem('userLl');
-    localStorage.removeItem('userEm');
-    localStorage.removeItem('address');
+    if( Cookies.get('satoken') === undefined ) {
+      localStorage.removeItem('isLogin');
+      localStorage.removeItem('userLl');
+      localStorage.removeItem('userEm');
+      localStorage.removeItem('address');
+    }
   });
 </script>
 

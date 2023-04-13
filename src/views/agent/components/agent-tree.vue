@@ -64,7 +64,7 @@
                   >
                   <template #cell="{ record }">
                       <div v-if="record.countlevel3">
-                        {{ $t('agent.level2') }}
+                        {{ $t('agent.level2') }} : {{ record.countlevel3 }}
                         <!-- {{ $t('agent.level2') + '('+(Number(record.subLevel)+1)+'Level)' }} : {{ record.countlevel3 }} -->
                       </div>
                       <div v-if="record.countlevel2">{{ $t('agent.level3') }} : {{ record.countlevel2 }}</div>
@@ -88,21 +88,21 @@
                       {{ record.addr ? record.addr : $t('workplace.table.nodata') }}
                     </template>
                   </a-table-column>
-                  <a-table-column
+                  <!-- <a-table-column
                     width="70"
                     :title="$t('workplace.table.download')"
                     data-index="download"
-                  />
+                  /> -->
                   <a-table-column
                     width="130"
                     :title="$t('workplace.table.ontime')"
                     data-index="duration"
                   />
-                  <a-table-column
+                  <!-- <a-table-column
                     width="130"
                     :title="$t('workplace.table.game')"
                     data-index="gametime"
-                  />
+                  /> -->
                   <a-table-column
                     width="60"
                     :title="$t('workplace.table.balance')"
