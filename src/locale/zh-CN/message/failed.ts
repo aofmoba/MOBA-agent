@@ -9,6 +9,7 @@ export default {
   'login.email.error4': '钱包地址错误',
   'login.email.error5': '该钱包地址已绑定其他账号，请切换钱包地址',
   'login.email.error6': '绑定失败！',
+  'login.email.error7': '当前账号为普通用户，请升级后登录',
   'reg.error': '身份注册失败',
   'beiz.error': '操作失败',
   'dobadge.error': '该身份对应的徽章错误！',

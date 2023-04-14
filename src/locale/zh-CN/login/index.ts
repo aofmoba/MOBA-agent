@@ -66,7 +66,7 @@ export default {
   'login.update.err': '修改失败',
   'login.update.pwdrule': '由6-12位数字、字母、特殊字符的任意2种组成',
   'login.welcome.tips': '由6-12位数字、字母、特殊字符的任意2种组成',
-  'login.connect.tips': '欢迎登录！',
+  'login.connect.tips': '欢迎登录 !',
   'login.register.code': '邀请码',
   'login.register.tips': '恭喜你被邀请注册成为经销商，点击下方注册！',
   'login.no.tips': '抱歉，您未被邀请成为经销商！',

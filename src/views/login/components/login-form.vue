@@ -219,6 +219,7 @@
           router.push({ name: 'Workplace' });
           localStorage.setItem('userLl', res.data.data[0].level);
           localStorage.setItem('userEm', res.data.data[0].email);
+          Cookies.set('user_login_com', JSON.stringify({satoken: Cookies.get('satoken'),email:res.data.data[0].email,address: res.data.data[0].address,level: res.data.data[0].level}), { expires: 30, path: '', domain: 'aof.games' })
         } else {
           Message.error(t('login.error'));
         }
@@ -446,6 +447,10 @@
                 return
               }
               if (result.data.code === 200 && result.data.data[1]) {
+                if( result.data.data[0].level <= 1 ){
+                  Message.error(t('login.email.error7'));
+                  return
+                }
                 localStorage.setItem('isLogin', 'true');
                 localStorage.setItem('userLl', result.data.data[0].level);
                 localStorage.setItem('userEm', result.data.data[0].email);

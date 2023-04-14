@@ -14,6 +14,7 @@
   import useUser from '@/hooks/user';
   import { useRouter } from 'vue-router';
   import Cookies from 'js-cookie'
+  import axios from 'axios';
   
   export default defineComponent({
     components: {
@@ -25,7 +26,7 @@
       const { userAddress, isRefresh } = storeToRefs(comStore);
       const { logout } = useUser();
 
-      onMounted(() => {
+      onMounted(async() => {
         const { ethereum } = window as any;
         if( localStorage.getItem('address') && ethereum){
           ethereum.on('accountsChanged', (accounts: any) => {
@@ -39,6 +40,7 @@
           const exdata = JSON.parse(Cookies.get('user_login_com'))
             // eslint-disable-next-line eqeqeq
             if( exdata.address && exdata.level !== '1' ){
+              await axios.get(`/api/user/doLogin?address=${exdata.address}`)
               Cookies.set('satoken', exdata.satoken, { expires: 30, path: '', domain: 'node.aof.games' })
               localStorage.setItem('userLl', exdata.level);
               localStorage.setItem('userEm', exdata.email);

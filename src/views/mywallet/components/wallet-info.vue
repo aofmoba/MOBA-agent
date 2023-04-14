@@ -19,7 +19,7 @@
     <div class="item">
       <span class="label">{{ $t('wallet.item.balance') }} : </span>
       <span class="num">
-        <a-spin :loading="loading2" :size="16" class="load">
+        <a-spin :loading="loading1" :size="16" class="load">
           {{ cardData.val.balance }}
         </a-spin>
       </span>
@@ -27,8 +27,13 @@
         $t('wallet.item.btn')
       }}</a-button>
     </div>
-    <div class="item">
+    <div class="item ">
       <span class="label">{{ $t('login.update.pwd') }} : </span>
+      <div v-if="viewPass" class="view-pass">
+        <span>{{ viewbol ? viewPass : '******' }}</span>
+        <icon-eye-invisible v-if="!viewbol" :size="18" @click="viewbol = true"/>
+        <icon-eye v-else :size="18" @click="viewbol = false" />
+      </div>
       <a-button
         type="primary"
         shape="round"
@@ -142,7 +147,7 @@
   import { useI18n } from 'vue-i18n';
   import { Message } from '@arco-design/web-vue';
   import useUser from '@/hooks/user';
-
+  
   const emit = defineEmits(['get-user']);
   const { logout } = useUser();
   const { t } = useI18n();
@@ -155,6 +160,7 @@
   const ruleform: any = ref(null); // 验证表单
   const btnDisable: any = ref(false);
   const level: any = ref(0);
+  const viewPass = ref<string>('');
   const formInfo: any = ref({
     inputVal: '',
   });
@@ -228,21 +234,23 @@
     // eslint-disable-next-line no-multi-assign
     loading1.value = loading2.value = true;
     axios
-      .get(`/api/user/doLogin?address=${address.value}`)
+      .get(`/api/user/getuser?address=${address.value}`)
       .then((res: any) => {
-        if (res.data.code === 200 && res.data.data[1]) {
+        const resData: any = res.data.data
+        if (res.data.code === 200 && resData) {
+          cardData.val.balance = (Math.floor(resData.personalrewards * 100) / 100).toFixed(2) || '0.00';
           // eslint-disable-next-line vue/custom-event-name-casing
-          emit('get-user', res.data.data[0].id);
-          level.value = res.data.data[0].level;
-          email.value = res.data.data[0].email;
+          emit('get-user', resData.id);
+          level.value = resData.level;
+          email.value = resData.email;
           // eslint-disable-next-line eqeqeq
-          if (res.data.data[0].level == '4') {
+          if (resData.level == '4') {
             cardData.val.level = 'agent.level1';
             // eslint-disable-next-line eqeqeq
-          } else if (res.data.data[0].level == '3') {
+          } else if (resData.level == '3') {
             cardData.val.level = 'agent.level2';
             // eslint-disable-next-line eqeqeq
-          } else if (res.data.data[0].level == '2') {
+          } else if (resData.level == '2') {
             cardData.val.level = 'agent.level3';
           } else {
             cardData.val.level = 'agent.level4';
@@ -284,16 +292,7 @@
     });
   };
 
-  // 轮询获取余额
-  let bTimer: any = null;
-  onActivated(() => {
-    bTimer = window.setInterval(() => {
-      getBalance();
-    }, 60000);
-  });
-  onDeactivated(() => {
-    clearInterval(bTimer);
-  });
+
 
   // 修改密码
   const pwdVisible = ref(false);
@@ -342,11 +341,31 @@
     });
   };
 
+  const viewbol = ref<boolean>(false)
+  const getPass = () => {
+    axios.get('/api//user/getPass').then((res: any)=>{
+      if( res.data.code === 200 ){
+        viewPass.value = res.data.data
+      }
+    })
+  }
+
+  // 轮询获取余额
+  let bTimer: any = null;
+  onActivated(() => {
+    bTimer = window.setInterval(() => {
+      getBalance();
+    }, 60000);
+  });
+  onDeactivated(() => {
+    clearInterval(bTimer);
+  });
+
   onMounted(() => {
     address.value = localStorage.getItem('address');
     email.value = localStorage.getItem('userEm');
     getLevel();
-    getBalance();
+    getPass()
   });
 </script>
 
@@ -355,9 +374,11 @@
     padding: 30px 0;
     border: 1px solid #e5e8ef;
     border-radius: 4px;
-
     .item {
+      display: flex;
+      align-items: center;
       padding: 14px 30px;
+      transition: all .2s ease;
 
       .label {
         padding-right: 18px;
@@ -370,7 +391,7 @@
         font-size: 18px;
 
         .load {
-          margin-bottom: 4px;
+          margin-bottom: 0px !important;
         }
       }
 
@@ -386,6 +407,13 @@
 
     &:hover {
       box-shadow: 1px 1px 3px #e5e8ef;
+    }
+  }
+  .view-pass{
+    margin-right: 23px;
+    svg{
+      cursor: pointer;
+      margin-left: 4px;
     }
   }
 </style>

@@ -10,6 +10,7 @@ export default {
   'login.email.error4': 'Wallet address error',
   'login.email.error5': 'This wallet address has been bound to another account, please switch the wallet address',
   'login.email.error6': 'Binding failed!',
+  'login.email.error7': 'This is a user account. Please log in after upgrading',
   'reg.error': 'Identity registration failed',
   'beiz.error': 'Operation failed',
   'dobadge.error': 'The badge corresponding to this identity is wrong!',

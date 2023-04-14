@@ -87,7 +87,8 @@ const useUserStore = defineStore('user', {
       localStorage.removeItem('userLl')
       localStorage.removeItem('userEm')
       localStorage.removeItem('address')
-      Cookies.remove('satoken', { domain: 'node.aof.games' })
+      Cookies.remove('satoken', { expires: 30, path: '/', domain: 'aof.games' })
+      Cookies.remove('satoken', { expires: 30, path: '/', domain: 'node.aof.games' })
       Cookies.remove('user_login_com', { domain: 'aof.games' })
       this.resetInfo();
       clearToken();
