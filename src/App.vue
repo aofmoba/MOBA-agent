@@ -51,7 +51,7 @@
               await axios.get(`/api/user/doLogin?address=${exdata.address}`)
             }
         } else if (Cookies.get('user_login_com') === undefined) {
-            logout()
+            // logout()
         }
       });
       return {

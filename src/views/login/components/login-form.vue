@@ -482,12 +482,13 @@
 
   onMounted(() => {
     invitCode.value = router.currentRoute.value.query.code;
-    if( Cookies.get('satoken') === undefined ) {
-      localStorage.removeItem('isLogin');
-      localStorage.removeItem('userLl');
-      localStorage.removeItem('userEm');
-      localStorage.removeItem('address');
-    }
+    if( invitCode.value ) exWallet()
+    // if( Cookies.get('user_login_com') === undefined ) {
+    //   localStorage.removeItem('isLogin');
+    //   localStorage.removeItem('userLl');
+    //   localStorage.removeItem('userEm');
+    //   localStorage.removeItem('address');
+    // }
   });
 </script>
 

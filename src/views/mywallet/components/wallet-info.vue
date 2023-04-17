@@ -238,7 +238,8 @@
       .then((res: any) => {
         const resData: any = res.data.data
         if (res.data.code === 200 && resData) {
-          cardData.val.balance = (Math.floor(resData.personalrewards * 100) / 100).toFixed(2) || '0.00';
+          // cardData.val.balance = (Math.floor(resData.personalrewards * 100) / 100).toFixed(2) || '0.00';
+          cardData.val.balance = resData.personalrewards || '0.00';
           // eslint-disable-next-line vue/custom-event-name-casing
           emit('get-user', resData.id);
           level.value = resData.level;
@@ -396,7 +397,7 @@
       }
 
       .btn {
-        margin-left: 80px;
+        margin-left: 40px;
         border-radius: 4px;
       }
 

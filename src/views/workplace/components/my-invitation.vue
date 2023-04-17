@@ -80,7 +80,8 @@
                 </div>
                 <div class="hash">
                   <div>{{ $t('workplace.total') }}: <span style="margin-right: 20px;">{{ totalInfo.total === -1 ? 0 : totalInfo.total }}</span></div>
-                  <div>{{ $t('workplace.hashrate') }}: <span>{{ totalInfo.hash }}</span></div>
+                  <div>{{ $t('workplace.hashrate') }}: <span style="margin-right: 20px;">{{ totalInfo.hash }}</span></div>
+                  <div>{{ $t('workplace.totalhashrate') }}: <span>{{ perCalculate ? Number(totalInfo.hash) * perCalculate : '--' }}</span></div>
                 </div>
               </div>
               <!-- 我邀请用户信息 -->
@@ -144,8 +145,11 @@
                   />
                   <a-table-column
                     :title="$t('workplace.table.hashrate')"
-                    data-index="hashrate"
-                  />
+                  >
+                    <template #cell="{ record }">
+                        {{ perCalculate ? Number(record.hashrate) * perCalculate : '--' }}
+                      </template>
+                  </a-table-column>
                   <a-table-column
                     :title="$t('workplace.table.beiz')"
                   >
@@ -529,7 +533,13 @@
 
 
   // 获取算力
+  const perCalculate = ref<number>(0)
   const getHashrate = async (editNameFlag?: any) => {
+    axios.get('/api/connection/calculateTotalForce').then((res: any) => {
+      if( res.status === 200 ){
+        perCalculate.value = Number(res.data['personal calculate'])*10000000
+      }
+    })
     await axios.get(`/api/user/getuser?address=${address.value}`)
       .then((res: any) => {
         if ( res.data.code === 200 && res.data.data ) {
@@ -786,12 +796,7 @@
         width: 220px;
       }
     }
-    .arco-table-td:nth-child(9) {
-      .arco-table-cell {
-        width: 120px;
-      }
-    }
-    .arco-table-td:nth-child(11) {
+    .arco-table-td:nth-child(8),.arco-table-td:nth-child(9),.arco-table-td:nth-child(11) {
       .arco-table-cell {
         width: 120px;
       }

@@ -114,10 +114,13 @@
                     data-index="createTime"
                   />
                   <a-table-column
-                    width="100"
+                    width="120"
                     :title="$t('workplace.table.hashrate')"
-                    data-index="hashrate"
-                  />
+                    >
+                    <template #cell="{ record }">
+                        {{ perCalculate ? Number(record.hashrate) * perCalculate : '--' }}
+                      </template>
+                  </a-table-column>
                   <a-table-column
                     width="120"
                     :title="$t('workplace.table.beiz')"
@@ -361,8 +364,14 @@
   };
 
   // get userinfo - subLevel
+  const perCalculate = ref<number>(0)
   const subLevel: any = ref(-1)
   const getUserInfo = () => {
+    axios.get('/api/connection/calculateTotalForce').then((res: any) => {
+      if( res.status === 200 ){
+        perCalculate.value = Number(res.data['personal calculate'])*10000000
+      }
+    })
     axios.get(`/api/user/getuser?address=${address.value}`).then((res: any) => {
       if ( res.data.code === 200 && res.data.data ) {
         subLevel.value = Number(res.data.data.SubLevel)
