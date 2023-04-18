@@ -4,7 +4,7 @@ export default {
   'agent.level1': 'Peak node',
   'agent.level2': 'Master node',
   'agent.level3': 'Guardian node',
-  'agent.level4': 'Client user',
+  'agent.level4': 'User node',
   'agent.level5': 'My details',
   'agent.btn.add': 'ADD',
   'agent.btn.addto': 'add to',

@@ -11,7 +11,7 @@
           :heading="5"
           :style="{ margin: 0, fontSize: '18px' }"
         >
-        Arena of Faith Online
+        Arena of Faith Testnet
         </a-typography-title>
         <icon-menu-fold
           v-if="appStore.device === 'mobile'"

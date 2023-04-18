@@ -39,7 +39,7 @@ export default {
   // my
   'workplace.me': 'me',
   'workplace.level': 'Level ',
-  'workplace.code1': 'User invitation link',
+  'workplace.code1': 'User node invitation link',
   'workplace.code2': 'Guardian node invitation link',
   'workplace.code3': 'Master node invitation link',
   'workplace.total': 'Total',

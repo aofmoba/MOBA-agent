@@ -18,7 +18,7 @@
       const { t } = useI18n();
       const appStore = useAppStore();
       const comStore = staticData();
-      const { isAssetsAllow } = storeToRefs(comStore);
+      const { isAssetsAllow,menuHidden } = storeToRefs(comStore);
       const permission = usePermission();
       const router = useRouter();
       const collapsed = computed({
@@ -36,7 +36,7 @@
           .find((el) => el.name === 'root') as RouteRecordNormalized;
       });
       const menuTree = computed(() => {
-        const copyRouter = JSON.parse(JSON.stringify(appRoute.value.children));
+        let copyRouter = JSON.parse(JSON.stringify(appRoute.value.children));
         copyRouter.sort(
           (a: RouteRecordNormalized, b: RouteRecordNormalized) => {
             return (
@@ -44,6 +44,11 @@
             );
           }
         );
+        const mylevel = menuHidden.value || String(localStorage.getItem('userLl'));
+        // eslint-disable-next-line eqeqeq
+        if( mylevel == '1' ){
+          copyRouter = copyRouter.filter((item: any) => !['AgentManagement','PromotionLink'].includes(item.name))
+        }
 
         // 只有可配置的钱包地址可以查看 Assets Overview 页面
         // eslint-disable-next-line no-empty

@@ -81,7 +81,7 @@
                 <div class="hash">
                   <div>{{ $t('workplace.total') }}: <span style="margin-right: 20px;">{{ totalInfo.total === -1 ? 0 : totalInfo.total }}</span></div>
                   <div>{{ $t('workplace.hashrate') }}: <span style="margin-right: 20px;">{{ totalInfo.hash }}</span></div>
-                  <div>{{ $t('workplace.totalhashrate') }}: <span>{{ perCalculate ? Number(totalInfo.hash) * perCalculate : '--' }}</span></div>
+                  <div>{{ $t('workplace.totalhashrate') }}: <span>{{ Number(totalInfo.hash) * perCalculate }}</span></div>
                 </div>
               </div>
               <!-- 我邀请用户信息 -->
@@ -147,7 +147,7 @@
                     :title="$t('workplace.table.hashrate')"
                   >
                     <template #cell="{ record }">
-                        {{ perCalculate ? Number(record.hashrate) * perCalculate : '--' }}
+                        {{ perCalculate >= 0 ? Number(record.hashrate) * perCalculate : '--' }}
                       </template>
                   </a-table-column>
                   <a-table-column
@@ -244,9 +244,13 @@
   import useLoading from '@/hooks/loading';
   import { computedDur, vertDate } from '@/utils/computed'
   import { Message } from '@arco-design/web-vue';
+  import { staticData } from '@/store';
+  import { storeToRefs } from 'pinia';
   import Cookies from 'js-cookie'
   import UpGrade from './upgrade.vue'
 
+  const comStore = staticData();
+  const { menuHidden } = storeToRefs(comStore);
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
   const upVisible = ref<boolean>(false)
@@ -355,7 +359,7 @@
         balance: result[i].fujiCoin ? result[i].fujiCoin : 0,
         createTime: result[i].createTime ? vertDate(result[i].createTime) : 'null',
         hashrate: result[i].hashrate,
-        remarks: result[i].remarks,
+        remarks: result[i].remarks === 'cyber_user'? '': result[i].remarks,
         level: result[i].level,
       });
       // 当修改昵称时，children不进行总数、算力计算
@@ -543,7 +547,7 @@
 
 
   // 获取算力
-  const perCalculate = ref<number>(0)
+  const perCalculate = ref<number>(-1)
   const getHashrate = async (editNameFlag?: any) => {
     axios.get('/api/connection/calculateTotalForce').then((res: any) => {
       if( res.status === 200 ){
@@ -574,7 +578,7 @@
             levels.value = 2;
             userLevel.value = 'agent.level3'
           }else{
-            levels.value = 1;
+            levels.value = 9;
             userLevel.value = 'agent.level4'
           }
           const tempArr = []
@@ -597,6 +601,7 @@
       .get(`/api/user/doLogin?address=${address.value}`)
       .then((res: any) => {
         if (res.data.code === 200 && res.data.data[1]) {
+          menuHidden.value = res.data.data[0].level
           level.value = res.data.data[0].level
           localStorage.setItem('userLl', res.data.data[0].level);
           localStorage.setItem('userEm', res.data.data[0].email);

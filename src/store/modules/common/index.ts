@@ -8,6 +8,7 @@ const staticData = defineStore('common', {
       badgeData: [],
       isRefresh: false,
       showbind: false,
+      menuHidden: '' // c-user login show menu: by level
     };
   },
 

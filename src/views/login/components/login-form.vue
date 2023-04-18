@@ -30,11 +30,7 @@
               }} -->
               {{ $t(userLevel) }} {{ nickna }}</div
             >
-            <div v-if="level !== 1" class="tips">{{ $t('login.connect.tips') }}</div>
-            <div v-else>
-              <div class="tips">{{ $t('login.upgrade.tips') }}</div>
-              <a-input v-model="upgradeCode" :placeholder="$t('login.register.code')" style="margin-top: 20px;" onfocus />
-            </div>
+            <div class="tips">{{ $t('login.connect.tips') }}</div>
           </div>
           <!-- 未注册带邀请码 -->
           <div v-else-if="invitCode" class="login-type">
@@ -85,7 +81,7 @@
         {{
           ![1, 2, 3, 4].includes(level) && invitCode
             ? $t('agent.register')
-            : ( level === 1 ? $t('login.upgrade.btn') : $t('login.form.login') )
+            : $t('login.form.login')
         }}
       </a-button>
     </div>
@@ -199,7 +195,6 @@
   const logDisable: any = ref(false);
   const textLoading: any = ref(false);
   const invitCode: any = ref('');
-  const upgradeCode = ref<string>('');
   const web3obj = new Web3((Web3 as any).givenProvider);
   const { ethereum } = window as any; // 获取小狐狸实例
   const userInfo = reactive({
@@ -210,26 +205,6 @@
     email: '',
     password: '',
   });
-
-  const upUserGrade = () => {
-    if( !upgradeCode.value ) return 
-    logDisable.value = true;
-    axios
-      .post(`/api/business/upGradeDealer?invCode=${upgradeCode.value}`)
-      .then((res: any) => {
-        if ( res.data.code === 200 ) {
-          // eslint-disable-next-line no-use-before-define
-          goWorkplace();
-        }else if( res.data.code === 500 ){
-            if( res.data.msg === '邀请码无效' ){
-                Message.error(t('upgrade.error'))
-            }
-            if( res.data.msg === '七位邀请码不能进行伙伴级账号升级' ){
-                Message.error(t('upgrade.error2'))
-            }
-        }
-      }).finally(()=>{logDisable.value = false})
-  }
 
   // into workplace
   const goWorkplace = async () => {
@@ -244,8 +219,6 @@
           localStorage.setItem('userLl', res.data.data[0].level);
           localStorage.setItem('userEm', res.data.data[0].email);
           Cookies.set('user_login_com', JSON.stringify({satoken: Cookies.get('satoken'),email:res.data.data[0].email,address: res.data.data[0].address,level: res.data.data[0].level}), { expires: 30, path: '', domain: 'aof.games' })
-        } else {
-          Message.error(t('login.error'));
         }
       }).finally(()=>{logDisable.value = false;})
   };
@@ -390,7 +363,6 @@
       }
       //  else if (level.value === 1) {
       //   // C端用户
-      //   upUserGrade()
       //   // Message.error(t('cuser.error'));
       // } 
       else {

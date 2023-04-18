@@ -6,7 +6,7 @@
         style="width: 50px;"
         src="https://moba-project.s3-accelerate.amazonaws.com/front/common/h-logo.webp"
       />
-      <div class="logo-text">Arena of Faith Online X-Plan</div>
+      <div class="logo-text">Arena of Faith Testnet X-Plan</div>
     </div>
     <LoginBanner />
     <div class="content">

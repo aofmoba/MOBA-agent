@@ -10,12 +10,13 @@ export default {
   'login.email.error4': 'Wallet address error',
   'login.email.error5': 'This wallet address has been bound to another account, please switch the wallet address',
   'login.email.error6': 'Binding failed!',
-  'login.email.error7': 'This is a user account. Please log in after upgrading',
+  'login.email.error7': 'This is a user node account. Please log in after upgrading',
   'reg.error': 'Identity registration failed',
   'beiz.error': 'Operation failed',
   'dobadge.error': 'The badge corresponding to this identity is wrong!',
-  'cuser.error': 'This address has been registered as a user and does not have permission to log in',
+  'cuser.error': 'This address has been registered as a user node and does not have permission to log in',
 
   'upgrade.error': 'Invalid invitation code!',
-  'upgrade.error2': 'The 7-digit invitation code level is not enough'
+  'upgrade.error1': 'Invitation code error!',
+  'upgrade.error2': 'The 7-digit invitation code level is not enough to upgrade'
 };

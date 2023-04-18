@@ -40,7 +40,7 @@ export default {
   'workplace.me': '我的',
   'workplace.level': '等级 ',
   'workplace.code': '邀请码',
-  'workplace.code1': '用户邀请链接',
+  'workplace.code1': '用户节点邀请链接',
   'workplace.code2': '守护节点邀请链接',
   'workplace.code3': '主节点邀请链接',
   'workplace.total': '总计',

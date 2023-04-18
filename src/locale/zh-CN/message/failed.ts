@@ -9,12 +9,13 @@ export default {
   'login.email.error4': '钱包地址错误',
   'login.email.error5': '该钱包地址已绑定其他账号，请切换钱包地址',
   'login.email.error6': '绑定失败！',
-  'login.email.error7': '当前账号为普通用户，请升级后登录',
+  'login.email.error7': '当前账号为用户节点，请升级后登录',
   'reg.error': '身份注册失败',
   'beiz.error': '操作失败',
   'dobadge.error': '该身份对应的徽章错误！',
-  'cuser.error': '该地址已注册成为用户，无权限登录',
+  'cuser.error': '该地址已注册成为用户节点，无权限登录',
 
   'upgrade.error': '邀请码无效！',
+  'upgrade.error1': '邀请码错误！',
   'upgrade.error2': '七位邀请码不能进行伙伴级账号升级'
 };

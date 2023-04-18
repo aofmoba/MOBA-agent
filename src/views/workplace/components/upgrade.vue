@@ -63,9 +63,12 @@ const upUserGrade = () => {
         }else if( res.data.code === 500 ){
             if( res.data.msg === '邀请码无效' ){
                 Message.error(t('upgrade.error'))
-            }
-            if( res.data.msg === '七位邀请码不能进行伙伴级账号升级' ){
+            }else if( res.data.msg === '邀请码有误' ){
+                Message.error(t('upgrade.error1'))
+            }else if( res.data.msg === '七位邀请码不能进行伙伴级账号升级' ){
                 Message.error(t('upgrade.error2'))
+            }else{
+                Message.error(res.data.msg)
             }
         }
       }).finally(()=>{setLoading(false)})

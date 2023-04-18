@@ -118,7 +118,7 @@
                     :title="$t('workplace.table.hashrate')"
                     >
                     <template #cell="{ record }">
-                        {{ perCalculate ? Number(record.hashrate) * perCalculate : '--' }}
+                        {{ perCalculate >= 0 ? Number(record.hashrate) * perCalculate :  '--'  }}
                       </template>
                   </a-table-column>
                   <a-table-column
@@ -290,7 +290,7 @@
           balance: resultL[i].fujiCoin ? resultL[i].fujiCoin : 0,
           createTime: resultL[i].createTime ? vertDate(resultL[i].createTime) : 'null',
           hashrate: resultL[i].hashrate,
-          remarks: resultL[i].remarks,
+          remarks: resultL[i].remarks === 'cyber_user' ? '':resultL[i].remarks,
           level: resultL[i].level,
           subLevel: resultL[i].SubLevel,
           isLeaf: isLeaf.value,
@@ -364,7 +364,7 @@
   };
 
   // get userinfo - subLevel
-  const perCalculate = ref<number>(0)
+  const perCalculate = ref<number>(-1)
   const subLevel: any = ref(-1)
   const getUserInfo = () => {
     axios.get('/api/connection/calculateTotalForce').then((res: any) => {
