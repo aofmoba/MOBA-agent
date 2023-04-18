@@ -9,7 +9,7 @@ export default {
   'promotion.quyu.link': '我的主节点链接',
   'promotion.down.link': '我的下载链接',
   'promotion.nothing': '呀, 空空如也。',
-  'promotion.national': '发展节点特权',
+  'promotion.national': '发展主节点特权',
   'promotion.regional': '发展守护节点特权',
   'promotion.partner': '发展用户节点特权',
   'promotion.purchase.link': '购买链接',

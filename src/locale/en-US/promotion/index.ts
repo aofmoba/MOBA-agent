@@ -9,7 +9,7 @@ export default {
   'promotion.quyu.link': 'My master node link',
   'promotion.down.link': 'My download link',
   'promotion.nothing': 'Oops, There’s nothing left here.',
-  'promotion.national': 'Develop node privileges',
+  'promotion.national': 'Develop master node privileges',
   'promotion.regional': 'Develop guardian node privileges',
   'promotion.partner': 'Develop user node privilege',
   'promotion.purchase.link': 'Purchase link',

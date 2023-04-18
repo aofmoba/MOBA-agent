@@ -49,7 +49,7 @@
                   <!-- {{ $t(userLevel) + (subLevel >= 1 ? '-'+subLevel : '') }} -->
                   {{ $t(userLevel) }}
                 </a-button>
-                <a-button type="primary" size="mini" style="min-width: 72px;height: 18px; line-height: 16px; margin-left: 12px;" @click="upVisible = true">{{ $t('agent.upgrade') }}</a-button>
+                <a-button v-if="level != 4" type="primary" size="mini" style="min-width: 72px;height: 18px; line-height: 16px; margin-left: 12px;" @click="upVisible = true">{{ $t('agent.upgrade') }}</a-button>
                 <!-- <div class="useremail">
                   <span v-show="!switchInput2">{{ editInfo.oldEmail }}</span>
                   <input v-show="switchInput2" v-model="editInfo.inputEmail" class="emailInput" type="text" :placeholder="editInfo.oldEmail" @blur="editName(2)">
@@ -308,7 +308,7 @@
     if( inCode.value.partnerCode && ( curCode.value == inCode.value.userCode ) ){
       curCode.value = inCode.value.partnerCode;
       btnContent.value = 'workplace.code2';
-    // eslint-disable-next-line eqeqeq
+      // eslint-disable-next-line eqeqeq
     }else if( inCode.value.userCode && ( curCode.value == inCode.value.partnerCode ) ){
       curCode.value = inCode.value.userCode;
       btnContent.value = 'workplace.code1';

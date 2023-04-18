@@ -8,7 +8,7 @@
     >
         <a-form :model="inviCode" layout="vertical">
             <a-form-item field="invicode" :label="$t('login.register.code')+'：'">
-                <a-input v-model="inviCode.cvalue" onfocus />
+                <a-input v-model="inviCode.cvalue" :placeholder="$t('workplace.upgrade.input')" onfocus />
             </a-form-item>
         </a-form>
         <template #footer>

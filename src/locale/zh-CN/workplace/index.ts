@@ -72,4 +72,5 @@ export default {
   'workplace.modal.place': '请选择 ...',
 
   'workplace.upgrade.title': '账号升级',
+  'workplace.upgrade.input': '请输入您的邀请码',
 };

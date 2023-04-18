@@ -72,4 +72,5 @@ export default {
 
 
   'workplace.upgrade.title': 'Account upgrade',
+  'workplace.upgrade.input': 'Please enter your invitation code',
 };

@@ -5,6 +5,42 @@
       <div class="content">
         <div class="card">
           <div
+            v-if="false && codeInfo.quyuCode"
+            class="item"
+          >
+            <div class="identity"
+              ><span>{{ $t('promotion.national') }}</span></div
+            >
+            <div class="info" >
+              <div class="subitem">
+                <div class="label"
+                  >{{ $t('promotion.quyu.code') }}:</div
+                >
+                <div class="num">
+                  <a-spin :loading="loading" class="load">
+                    {{ codeInfo.quyuCode }}
+                  </a-spin>
+                </div>
+              </div>
+              <div class="subitem">
+                <div class="label"
+                  >{{$t('promotion.quyu.link')}}:</div
+                >
+                <div class="num">
+                  <a
+                    :href="
+                      `https://node.aof.games?code=` +
+                      codeInfo.quyuCode
+                    "
+                    target="view_window"
+                  >
+                    https://node.aof.games?code={{ codeInfo.quyuCode }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
             v-if="codeInfo.partnerCode"
             class="item"
           >
