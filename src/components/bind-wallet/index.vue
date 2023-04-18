@@ -34,7 +34,7 @@
   >
     <template #title>
       <img
-        src="https://d2cimmz3cflrbm.cloudfront.net/nwhome/metaMask.svg"
+        src="https://cyberpop-page-new.s3-accelerate.amazonaws.com/nwhome/metaMask.svg"
         style="width: 38px; margin-right: 10px"
       />
       {{ $t('login.modal.title') }}

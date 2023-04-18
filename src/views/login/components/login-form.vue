@@ -155,7 +155,7 @@
     >
       <template #title>
         <img
-          src="https://d2cimmz3cflrbm.cloudfront.net/nwhome/metaMask.svg"
+          src="https://cyberpop-page-new.s3-accelerate.amazonaws.com/nwhome/metaMask.svg"
           style="width: 38px; margin-right: 10px"
         />
         {{ $t('login.modal.title') }}
@@ -196,7 +196,6 @@
   const textLoading: any = ref(false);
   const invitCode: any = ref('');
   const web3obj = new Web3((Web3 as any).givenProvider);
-  const { ethereum } = window as any; // 获取小狐狸实例
   const userInfo = reactive({
     address: '',
     email: '',
@@ -224,56 +223,56 @@
   };
 
   // 获取用户信息 已注册、未注册
-  const connect = async () => {
+  const connect = () => {
     textLoading.value = true;
     isReady.value = 1;
-    if (!ethereum) {
+    if (!(window as any).ethereum) {
       noInVisible.value = true;
     } else {
-      await ethereum
-        .request({ method: 'eth_requestAccounts' })
-        .then(async (res: any) => {
+      try {
+        web3J.login().then(async (res: any) => {
           const res0 = await web3obj.utils.toChecksumAddress(res[0]);
-          userInfo.address = res0;
+          // eslint-disable-next-line no-multi-assign
+          userInfo.address = userAddress.value = res0;
           localStorage.setItem('address', res0);
-          userAddress.value = res0;
-          try {
-            await axios
-              .get(`/api/user/getuser?address=${userInfo.address}`)
-              .then((xres: any) => {
-                if (xres.data.code === 200) {
-                  isReady.value = 2;
-                  logDisable.value = false;
-                  textLoading.value = false;
-                  if (xres.data.data) {
-                    nickna.value = xres.data.data.nikename;
-                    level.value = Number(xres.data.data.level);
-                    subLevel.value = Number(xres.data.data.SubLevel);
+          await axios
+            .get(`/api/user/getuser?address=${userInfo.address}`)
+            .then((xres: any) => {
+              if (xres.data.code === 200) {
+                isReady.value = 2;
+                logDisable.value = false;
+                textLoading.value = false;
+                if (xres.data.data) {
+                  nickna.value = xres.data.data.nikename;
+                  level.value = Number(xres.data.data.level);
+                  subLevel.value = Number(xres.data.data.SubLevel);
+                  // eslint-disable-next-line eqeqeq
+                  if (xres.data.data.level == '4') {
+                    userLevel.value = 'agent.level1';
                     // eslint-disable-next-line eqeqeq
-                    if (xres.data.data.level == '4') {
-                      userLevel.value = 'agent.level1';
-                      // eslint-disable-next-line eqeqeq
-                    } else if (xres.data.data.level == '3') {
-                      userLevel.value = 'agent.level2';
-                      // eslint-disable-next-line eqeqeq
-                    } else if (xres.data.data.level == '2') {
-                      userLevel.value = 'agent.level3';
-                      // eslint-disable-next-line eqeqeq
-                    } else if (xres.data.data.level == '1') {
-                      userLevel.value = 'agent.level4';
-                    }
+                  } else if (xres.data.data.level == '3') {
+                    userLevel.value = 'agent.level2';
+                    // eslint-disable-next-line eqeqeq
+                  } else if (xres.data.data.level == '2') {
+                    userLevel.value = 'agent.level3';
+                    // eslint-disable-next-line eqeqeq
+                  } else if (xres.data.data.level == '1') {
+                    userLevel.value = 'agent.level4';
                   }
                 }
-              })
-              .finally(() => {
-                textLoading.value = false;
-              });
-          } catch (error: any) {
-            Message.error(error.message);
-            isReady.value = 0;
-            textLoading.value = false;
-          }
-        });
+              }
+            }).finally(() => {
+              textLoading.value = false;
+            });
+        }).catch((err: any)=>{
+          isReady.value = 0;
+          connect()
+        })
+      } catch (error: any) {
+        Message.error(error.message);
+        isReady.value = 0;
+        textLoading.value = false;
+      }
     }
   };
 
@@ -379,6 +378,9 @@
         content: t('login.loading'),
         duration: 1500,
       });
+      setTimeout(()=>{
+        logDisable.value = false
+      },3000)
     }
   };
 
@@ -421,7 +423,7 @@
     choose.value = true;
     // eslint-disable-next-line eqeqeq
     if (isReady.value == 0) {
-      connect();
+        connect();
     }
   };
 

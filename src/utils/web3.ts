@@ -10,9 +10,6 @@ const accounts = localStorage.getItem('address');
 // 登录钱包
 const login = async () => {
   const { ethereum } = window as any; // 获取小狐狸实例
-  // if (!ethereum) {
-  //     return 'No install';
-  // }
   return ethereum.request({ method: 'eth_requestAccounts' });
 };
 
