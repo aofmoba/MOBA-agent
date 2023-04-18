@@ -69,4 +69,7 @@ export default {
   'workplace.modal.date4': 'One month',
   'workplace.modal.date5': 'Forever',
   'workplace.modal.place': 'Please select ...',
+
+
+  'workplace.upgrade.title': 'Account upgrade',
 };

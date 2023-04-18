@@ -9,4 +9,6 @@ export default {
   'navbar.action.locale': 'Success',
   'beiz.success': 'Operation successful',
   'login.loading': 'Please wait for query...',
+  'upgrade.success': 'Upgrade successful!',
+  'upgrade.faild': 'Upgrade failed! Please try again',
 };

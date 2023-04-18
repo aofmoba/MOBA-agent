@@ -70,4 +70,6 @@ export default {
   'workplace.modal.date4': '一个月',
   'workplace.modal.date5': '永久',
   'workplace.modal.place': '请选择 ...',
+
+  'workplace.upgrade.title': '账号升级',
 };

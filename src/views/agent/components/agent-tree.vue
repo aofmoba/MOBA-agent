@@ -27,7 +27,7 @@
               >{{ $t('agent.level4') }}</a-button
             > -->
           </div>
-          <div>
+          <!-- <div>
             <a-button 
               disabled
               type="outline" 
@@ -37,7 +37,7 @@
             >
               {{ $t('agent.btn.add') }}
             </a-button>
-          </div>
+          </div> -->
         </a-space>
         <div class="card">
           <a-spin :loading="loading" style="display: block">
@@ -77,7 +77,7 @@
                     :title="$t('workplace.table.nickname')"
                   >
                     <template #cell="{ record }">
-                      {{record.nickname ? record.nickname : 'null'}}
+                      {{ record.nickname }}
                     </template>
                   </a-table-column>
                   <a-table-column
@@ -290,7 +290,7 @@
           balance: resultL[i].fujiCoin ? resultL[i].fujiCoin : 0,
           createTime: resultL[i].createTime ? vertDate(resultL[i].createTime) : 'null',
           hashrate: resultL[i].hashrate,
-          remarks: resultL[i].remarks ? resultL[i].remarks : 'Cyber user',
+          remarks: resultL[i].remarks,
           level: resultL[i].level,
           subLevel: resultL[i].SubLevel,
           isLeaf: isLeaf.value,
@@ -567,7 +567,9 @@
       .btnGroup {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 20px;
+        button{
+          margin-bottom: 20px;
+        }
         .addbtn:hover {
           background: rgba(64, 128, 255, 0.15);
         }

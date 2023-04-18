@@ -70,4 +70,6 @@ export default {
   'login.register.code': '邀请码',
   'login.register.tips': '恭喜你被邀请注册成为经销商，点击下方注册！',
   'login.no.tips': '抱歉，您未被邀请成为经销商！',
+  'login.upgrade.tips': '进入系统，请先输入邀请码进行升级',
+  'login.upgrade.btn': '升级',
 };

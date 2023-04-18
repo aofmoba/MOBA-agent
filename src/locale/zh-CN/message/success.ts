@@ -9,4 +9,6 @@ export default {
   'navbar.action.locale': 'Success',
   'beiz.success': '操作成功',
   'login.loading': '请等待查询...',
+  'upgrade.success': '升级成功！',
+  'upgrade.faild': '升级失败！请重试',
 };

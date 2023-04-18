@@ -205,8 +205,7 @@
               :style="{ width: '100%' }"
               size="large"
             >
-              <a-skeleton-line :rows="4" />
-              <a-skeleton-shape />
+              <a-skeleton-line :rows="5" />
             </a-space>
           </a-skeleton>
         </div>

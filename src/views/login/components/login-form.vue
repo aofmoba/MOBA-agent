@@ -30,7 +30,11 @@
               }} -->
               {{ $t(userLevel) }} {{ nickna }}</div
             >
-            <div class="tips">{{ $t('login.connect.tips') }}</div>
+            <div v-if="level !== 1" class="tips">{{ $t('login.connect.tips') }}</div>
+            <div v-else>
+              <div class="tips">{{ $t('login.upgrade.tips') }}</div>
+              <a-input v-model="upgradeCode" :placeholder="$t('login.register.code')" style="margin-top: 20px;" onfocus />
+            </div>
           </div>
           <!-- 未注册带邀请码 -->
           <div v-else-if="invitCode" class="login-type">
@@ -81,7 +85,7 @@
         {{
           ![1, 2, 3, 4].includes(level) && invitCode
             ? $t('agent.register')
-            : $t('login.form.login')
+            : ( level === 1 ? $t('login.upgrade.btn') : $t('login.form.login') )
         }}
       </a-button>
     </div>
@@ -195,6 +199,7 @@
   const logDisable: any = ref(false);
   const textLoading: any = ref(false);
   const invitCode: any = ref('');
+  const upgradeCode = ref<string>('');
   const web3obj = new Web3((Web3 as any).givenProvider);
   const { ethereum } = window as any; // 获取小狐狸实例
   const userInfo = reactive({
@@ -206,6 +211,26 @@
     password: '',
   });
 
+  const upUserGrade = () => {
+    if( !upgradeCode.value ) return 
+    logDisable.value = true;
+    axios
+      .post(`/api/business/upGradeDealer?invCode=${upgradeCode.value}`)
+      .then((res: any) => {
+        if ( res.data.code === 200 ) {
+          // eslint-disable-next-line no-use-before-define
+          goWorkplace();
+        }else if( res.data.code === 500 ){
+            if( res.data.msg === '邀请码无效' ){
+                Message.error(t('upgrade.error'))
+            }
+            if( res.data.msg === '七位邀请码不能进行伙伴级账号升级' ){
+                Message.error(t('upgrade.error2'))
+            }
+        }
+      }).finally(()=>{logDisable.value = false})
+  }
+
   // into workplace
   const goWorkplace = async () => {
     logDisable.value = true;
@@ -213,7 +238,6 @@
       .get(`/api/user/doLogin?address=${userInfo.address}`)
       .then((res: any) => {
         if (res.data.code === 200 && res.data.data[1]) {
-          logDisable.value = false;
           Message.success(t('login.success'));
           localStorage.setItem('isLogin', 'true');
           router.push({ name: 'Workplace' });
@@ -223,7 +247,7 @@
         } else {
           Message.error(t('login.error'));
         }
-      });
+      }).finally(()=>{logDisable.value = false;})
   };
 
   // 获取用户信息 已注册、未注册
@@ -283,7 +307,7 @@
   // 注册 - Verify that the mailbox has been registered
   const registerRef: any = ref(null);
   const verification = () => {
-    registerRef.value.validate((res: any) => {
+    registerRef.value?.validate((res: any) => {
       // eslint-disable-next-line eqeqeq
       if (res == undefined) {
         logDisable.value = true;
@@ -363,10 +387,13 @@
       if (level.value === 0) {
         // 用户未注册
         verification();
-      } else if (level.value === 1) {
-        // C端用户
-        Message.error(t('cuser.error'));
-      } else {
+      }
+      //  else if (level.value === 1) {
+      //   // C端用户
+      //   upUserGrade()
+      //   // Message.error(t('cuser.error'));
+      // } 
+      else {
         // 可登录用户
         goWorkplace();
       }
@@ -447,10 +474,10 @@
                 return
               }
               if (result.data.code === 200 && result.data.data[1]) {
-                if( result.data.data[0].level <= 1 ){
-                  Message.error(t('login.email.error7'));
-                  return
-                }
+                // if( result.data.data[0].level <= 1 ){
+                //   Message.error(t('login.email.error7'));
+                //   return
+                // }
                 localStorage.setItem('isLogin', 'true');
                 localStorage.setItem('userLl', result.data.data[0].level);
                 localStorage.setItem('userEm', result.data.data[0].email);

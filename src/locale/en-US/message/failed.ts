@@ -15,4 +15,7 @@ export default {
   'beiz.error': 'Operation failed',
   'dobadge.error': 'The badge corresponding to this identity is wrong!',
   'cuser.error': 'This address has been registered as a user and does not have permission to log in',
+
+  'upgrade.error': 'Invalid invitation code!',
+  'upgrade.error2': 'The 7-digit invitation code level is not enough'
 };

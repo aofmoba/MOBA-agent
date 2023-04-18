@@ -38,7 +38,6 @@ declare module 'vue' {
     ASelect: typeof import('@arco-design/web-vue')['Select']
     ASkeleton: typeof import('@arco-design/web-vue')['Skeleton']
     ASkeletonLine: typeof import('@arco-design/web-vue')['SkeletonLine']
-    ASkeletonShape: typeof import('@arco-design/web-vue')['SkeletonShape']
     ASpace: typeof import('@arco-design/web-vue')['Space']
     ASpin: typeof import('@arco-design/web-vue')['Spin']
     ASubMenu: typeof import('@arco-design/web-vue')['SubMenu']

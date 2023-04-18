@@ -69,4 +69,6 @@ export default {
   'login.register.code': 'Invitation code',
   'login.register.tips': 'Congratulations on being invited to register as a dealer, click to register below!',
   'login.no.tips': 'Sorry, you have not been invited to become a dealer!',
+  'login.upgrade.tips': 'Entering the system, please enter the invitation code first to upgrade',
+  'login.upgrade.btn': 'Upgrade',
 };

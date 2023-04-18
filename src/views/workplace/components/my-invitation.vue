@@ -49,7 +49,7 @@
                   <!-- {{ $t(userLevel) + (subLevel >= 1 ? '-'+subLevel : '') }} -->
                   {{ $t(userLevel) }}
                 </a-button>
-                <a-button type="primary" size="mini" style="min-width: 72px;height: 18px; line-height: 16px; margin-left: 12px;">{{ $t('agent.upgrade') }}</a-button>
+                <a-button type="primary" size="mini" style="min-width: 72px;height: 18px; line-height: 16px; margin-left: 12px;" @click="upVisible = true">{{ $t('agent.upgrade') }}</a-button>
                 <!-- <div class="useremail">
                   <span v-show="!switchInput2">{{ editInfo.oldEmail }}</span>
                   <input v-show="switchInput2" v-model="editInfo.inputEmail" class="emailInput" type="text" :placeholder="editInfo.oldEmail" @blur="editName(2)">
@@ -58,7 +58,7 @@
               </div>
             </template>
             <template #extra>
-              <div v-if="level > 2" class="code-group">
+              <div v-if="level >= 2" class="code-group">
                 <div class="code">
                   <a-button type="outline" size="mini" @click="changeCode()">{{ $t(btnContent) }}</a-button>
                 </div>
@@ -113,7 +113,7 @@
                     :title="$t('workplace.table.nickname')"
                   >
                     <template #cell="{ record }">
-                      {{record.nickname ? record.nickname : 'null'}}
+                      {{ record.nickname }}
                     </template>
                   </a-table-column>
                   <a-table-column
@@ -188,6 +188,7 @@
       class="disModal"
       :cancel-text="$t('login.modal.cancel2')"
       :ok-text="$t('login.modal.ok2')"
+      :unmount-on-close="true"
       @cancel="disCancel"
       @ok="disMember"
     >
@@ -217,6 +218,7 @@
       simple
       :cancel-text="$t('login.modal.cancel2')"
       :ok-text="$t('login.modal.ok2')"
+      :unmount-on-close="true"
       @cancel="editCancel"
       @ok="okRemarks"
     >
@@ -229,6 +231,9 @@
         </a-form-item>
       </a-form>
     </a-modal>
+
+    <!-- up grade -->
+    <UpGrade :visible="upVisible" @cancelup="upGradeRes"/>
   </a-grid>
 </template>
 
@@ -239,9 +244,12 @@
   import useLoading from '@/hooks/loading';
   import { computedDur, vertDate } from '@/utils/computed'
   import { Message } from '@arco-design/web-vue';
+  import Cookies from 'js-cookie'
+  import UpGrade from './upgrade.vue'
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
+  const upVisible = ref<boolean>(false)
   const address: any = ref('');
   const email: any = ref('');
   const inCode: any = ref({}); // 最多存放三个邀请码
@@ -252,7 +260,7 @@
   const treeDataL2: any = ref([]);
   const treeDataL3: any = ref([]);
   const treeDataL4: any = ref([]);
-  const btnContent: any = ref('workplace.code2')
+  const btnContent: any = ref('workplace.code1')
   const level: any = ref('1')
   const subLevel: any = ref(-1)
   const userLevel: any = ref('workplace.level')
@@ -288,6 +296,8 @@
     current: 1,
     pageSize: 10,
   });
+
+
   // switch code
   const changeCode = () =>{
     // eslint-disable-next-line eqeqeq
@@ -298,7 +308,6 @@
     }else if( inCode.value.userCode && ( curCode.value == inCode.value.partnerCode ) ){
       curCode.value = inCode.value.userCode;
       btnContent.value = 'workplace.code1';
-    // eslint-disable-next-line eqeqeq
     }
   }
 
@@ -346,7 +355,7 @@
         balance: result[i].fujiCoin ? result[i].fujiCoin : 0,
         createTime: result[i].createTime ? vertDate(result[i].createTime) : 'null',
         hashrate: result[i].hashrate,
-        remarks: result[i].remarks ? result[i].remarks : 'Cyber user',
+        remarks: result[i].remarks,
         level: result[i].level,
       });
       // 当修改昵称时，children不进行总数、算力计算
@@ -381,7 +390,8 @@
             inCode.value.quyuCode = result.OneClass ? result.OneClass : '';
             inCode.value.partnerCode = result.twoClass ? result.twoClass : '';
             inCode.value.userCode = result.threeClass;
-            curCode.value = result.twoClass;
+            curCode.value = result.threeClass;
+            btnContent.value = 'workplace.code1';
             if( result.level3 ){
               totalInfo.value.level3count = result.level3.length;
               const children2 = childPush( result.level3 );
@@ -577,6 +587,26 @@
       })
   }
 
+  // 升级组件
+  const upGradeRes = (bol: boolean,succ?: boolean) => {
+    upVisible.value = bol
+    console.log(succ);
+    if( succ ) {
+      console.log(1);
+      axios
+      .get(`/api/user/doLogin?address=${address.value}`)
+      .then((res: any) => {
+        if (res.data.code === 200 && res.data.data[1]) {
+          level.value = res.data.data[0].level
+          localStorage.setItem('userLl', res.data.data[0].level);
+          localStorage.setItem('userEm', res.data.data[0].email);
+          Cookies.set('user_login_com', JSON.stringify({satoken: Cookies.get('satoken'),email:res.data.data[0].email,address: res.data.data[0].address,level: res.data.data[0].level}), { expires: 30, path: '', domain: 'aof.games' })
+        }
+      });
+      getHashrate();
+      getMyInvit();
+    }
+  }
 
   onMounted(() => {
     address.value = localStorage.getItem('address');

@@ -14,4 +14,7 @@ export default {
   'beiz.error': '操作失败',
   'dobadge.error': '该身份对应的徽章错误！',
   'cuser.error': '该地址已注册成为用户，无权限登录',
+
+  'upgrade.error': '邀请码无效！',
+  'upgrade.error2': '七位邀请码不能进行伙伴级账号升级'
 };
