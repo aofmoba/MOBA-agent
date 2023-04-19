@@ -15,6 +15,8 @@
   import { useRouter } from 'vue-router';
   import Cookies from 'js-cookie'
   import axios from 'axios';
+  // eslint-disable-next-line import/extensions
+  import Web3 from 'web3/dist/web3.min.js';
   
   
   export default defineComponent({
@@ -26,6 +28,7 @@
       const userStore = useUserStore();
       const comStore = staticData();
       const { userAddress, isRefresh } = storeToRefs(comStore);
+      const web3obj = new Web3((Web3 as any).givenProvider);
       const { logout } = useUser();
 
       onMounted(async() => {

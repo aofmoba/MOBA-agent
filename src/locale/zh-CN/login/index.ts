@@ -70,4 +70,6 @@ export default {
   'login.register.code': '邀请码',
   'login.register.tips': '恭喜你被邀请注册成为经销商，点击下方注册！',
   'login.no.tips': '抱歉，您未被邀请成为经销商！',
+
+  'login.out': '登录已过期，请重新登录',
 };

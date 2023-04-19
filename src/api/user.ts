@@ -21,3 +21,7 @@ export function logout() {
 export function getUserInfo() {
   return axios.post<UserState>('/api/user/info');
 }
+
+export function isLogin() {
+  return axios.post('/api/user/isLogin');
+}

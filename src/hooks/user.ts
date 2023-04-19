@@ -1,13 +1,10 @@
 import { useRouter } from 'vue-router';
-import { Message } from '@arco-design/web-vue';
-
 import { useUserStore } from '@/store';
-import { useI18n } from 'vue-i18n';
+import router from '../router'
 
 export default function useUser() {
-  const router = useRouter();
+  // const router = useRouter();
   const userStore = useUserStore();
-  const { t } = useI18n();
   const logout = async (logoutTo?: string) => {
     await userStore.logout();
     const currentRoute = router.currentRoute.value;

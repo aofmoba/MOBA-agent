@@ -69,4 +69,6 @@ export default {
   'login.register.code': 'Invitation code',
   'login.register.tips': 'Congratulations on being invited to register as a dealer, click to register below!',
   'login.no.tips': 'Sorry, you have not been invited to become a dealer!',
+
+  'login.out': 'Login has expired, please log in again',
 };

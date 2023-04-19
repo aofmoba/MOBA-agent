@@ -7,7 +7,7 @@ const isLogin = () => {
 };
 
 const getToken = () => {
-  return localStorage.getItem('token');
+  return localStorage.getItem('isLogin');
 };
 
 const setToken = (token: string) => {
@@ -15,7 +15,7 @@ const setToken = (token: string) => {
 };
 
 const clearToken = () => {
-  localStorage.removeItem('token');
+  localStorage.removeItem('isLogin');
 };
 
 export { isLogin, getToken, setToken, clearToken };

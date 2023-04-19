@@ -1,7 +1,12 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Message, Modal } from '@arco-design/web-vue';
-import { useUserStore } from '@/store';
+import { getToken, clearToken } from '@/utils/auth';
+import useUser from '@/hooks/user';
+import { isLogin } from '@/api/user';
+import i18n from '../locale';
+import router from '../router'
 
+const { t } = i18n.global;
 export interface HttpResponse<T = unknown> {
   status: number;
   msg: string;
@@ -9,12 +14,56 @@ export interface HttpResponse<T = unknown> {
   data: T;
 }
 
+// axios.defaults.headers.post["Content-Type"] = "application/json;charset=UTF-8";
 // if (import.meta.env.VITE_API_BASE_URL) {
 //   axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
 // }
 
+// 是否正在刷新的标志
+(window as any).isRefreshing = false;
+// 存储请求的数组
+let cacheRequestArr: any = [];
+
+// 将所有的请求都push到数组中,其实数组是[function(token){}, function(token){},...]
+const cacheRequestArrHandle = (cb: any) => {
+    cacheRequestArr.push(cb);
+}
+// 数组中的请求得到新的token之后自执行，用新的token去重新发起请求
+const afreshRequest = () => {
+    cacheRequestArr.map((cb: any) => cb());
+    cacheRequestArr = [];
+}
+
 axios.interceptors.request.use(
   (config: AxiosRequestConfig) => {
+    const token = getToken();
+    const loginApi: Array<string | any> = ['/api/user/logout','/api/user/isLogin','/api/user/doLogin','/api/user/getuser','/api/user/bemail','/api/business/invuser','/api/user/baddress','/api/user/doLoginEmail']
+    const index = loginApi.findIndex((item: any) => (config.url as any).includes(item))
+    if (token && index < 0 ) {
+      if (!(window as any).isRefreshing) {
+        (window as any).isRefreshing = true
+        isLogin().then((res: any) => {
+          if( typeof(res.data) === 'string' ){
+            afreshRequest()
+          }else{
+            Message.error({
+              content: t('login.out'),
+              duration: 5 * 1000,
+            });
+            const { logout } = useUser();
+            logout();
+          }
+        }).finally(() => {(window as any).isRefreshing = false;})
+      }
+      /* 把请求(token)=>{....}都push到一个数组中 */
+      const retry = new Promise((resolve, reject) => {
+        cacheRequestArrHandle(() => {
+          /* 将请求挂起 */
+          resolve(config)
+        })
+      })
+      return retry
+    }
     return config;
   },
   (error) => {

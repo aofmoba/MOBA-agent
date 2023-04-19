@@ -168,7 +168,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, reactive, onMounted, watch } from 'vue';
+  import { ref, reactive, onMounted, watch, onActivated } from 'vue';
   import { useRouter } from 'vue-router';
   import { Message } from '@arco-design/web-vue';
   import { useI18n } from 'vue-i18n';
@@ -223,51 +223,47 @@
   };
 
   // 获取用户信息 已注册、未注册
-  const connect = () => {
+  const connect = async () => {
     textLoading.value = true;
     isReady.value = 1;
     if (!(window as any).ethereum) {
       noInVisible.value = true;
     } else {
       try {
-        web3J.login().then(async (res: any) => {
-          const res0 = await web3obj.utils.toChecksumAddress(res[0]);
-          // eslint-disable-next-line no-multi-assign
-          userInfo.address = userAddress.value = res0;
-          localStorage.setItem('address', res0);
-          await axios
-            .get(`/api/user/getuser?address=${userInfo.address}`)
-            .then((xres: any) => {
-              if (xres.data.code === 200) {
-                isReady.value = 2;
-                logDisable.value = false;
-                textLoading.value = false;
-                if (xres.data.data) {
-                  nickna.value = xres.data.data.nikename;
-                  level.value = Number(xres.data.data.level);
-                  subLevel.value = Number(xres.data.data.SubLevel);
+        const [accounts] = await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
+        const res0 = await web3obj.utils.toChecksumAddress(accounts);
+        // eslint-disable-next-line no-multi-assign
+        userInfo.address = userAddress.value = res0;
+        localStorage.setItem('address', res0);
+        await axios
+          .get(`/api/user/getuser?address=${userInfo.address}`)
+          .then((xres: any) => {
+            if (xres.data.code === 200) {
+              isReady.value = 2;
+              logDisable.value = false;
+              textLoading.value = false;
+              if (xres.data.data) {
+                nickna.value = xres.data.data.nikename;
+                level.value = Number(xres.data.data.level);
+                subLevel.value = Number(xres.data.data.SubLevel);
+                // eslint-disable-next-line eqeqeq
+                if (xres.data.data.level == '4') {
+                  userLevel.value = 'agent.level1';
                   // eslint-disable-next-line eqeqeq
-                  if (xres.data.data.level == '4') {
-                    userLevel.value = 'agent.level1';
-                    // eslint-disable-next-line eqeqeq
-                  } else if (xres.data.data.level == '3') {
-                    userLevel.value = 'agent.level2';
-                    // eslint-disable-next-line eqeqeq
-                  } else if (xres.data.data.level == '2') {
-                    userLevel.value = 'agent.level3';
-                    // eslint-disable-next-line eqeqeq
-                  } else if (xres.data.data.level == '1') {
-                    userLevel.value = 'agent.level4';
-                  }
+                } else if (xres.data.data.level == '3') {
+                  userLevel.value = 'agent.level2';
+                  // eslint-disable-next-line eqeqeq
+                } else if (xres.data.data.level == '2') {
+                  userLevel.value = 'agent.level3';
+                  // eslint-disable-next-line eqeqeq
+                } else if (xres.data.data.level == '1') {
+                  userLevel.value = 'agent.level4';
                 }
               }
-            }).finally(() => {
-              textLoading.value = false;
-            });
-        }).catch((err: any)=>{
-          isReady.value = 0;
-          connect()
-        })
+            }
+          }).finally(() => {
+            textLoading.value = false;
+          });
       } catch (error: any) {
         Message.error(error.message);
         isReady.value = 0;
@@ -480,16 +476,13 @@
       }
     });
   };
-
   onMounted(() => {
     invitCode.value = router.currentRoute.value.query.code;
     if( invitCode.value ) exWallet()
-    // if( Cookies.get('user_login_com') === undefined ) {
-    //   localStorage.removeItem('isLogin');
-    //   localStorage.removeItem('userLl');
-    //   localStorage.removeItem('userEm');
-    //   localStorage.removeItem('address');
-    // }
+    // localStorage.removeItem('isLogin');
+    // localStorage.removeItem('userLl');
+    // localStorage.removeItem('userEm');
+    // localStorage.removeItem('address');
   });
 </script>
 
