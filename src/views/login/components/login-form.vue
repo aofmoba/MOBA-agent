@@ -175,7 +175,6 @@
   import { staticData } from '@/store';
   import axios from 'axios';
   import { storeToRefs } from 'pinia';
-  import web3J from '@/utils/web3';
   // eslint-disable-next-line import/extensions
   import Web3 from 'web3/dist/web3.min.js';
   // import contracts from '@/utils/contracts';
@@ -195,7 +194,6 @@
   const logDisable: any = ref(false);
   const textLoading: any = ref(false);
   const invitCode: any = ref('');
-  const web3obj = new Web3((Web3 as any).givenProvider);
   const userInfo = reactive({
     address: '',
     email: '',
@@ -226,11 +224,13 @@
   const connect = async () => {
     textLoading.value = true;
     isReady.value = 1;
-    if (!(window as any).ethereum) {
+    const { ethereum } = window as any; // 获取小狐狸实例
+    if (!ethereum) {
       noInVisible.value = true;
     } else {
       try {
-        const [accounts] = await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
+        const [accounts] = await ethereum.request({ method: 'eth_requestAccounts' });
+        const web3obj = new Web3((Web3 as any).givenProvider);
         const res0 = await web3obj.utils.toChecksumAddress(accounts);
         // eslint-disable-next-line no-multi-assign
         userInfo.address = userAddress.value = res0;
