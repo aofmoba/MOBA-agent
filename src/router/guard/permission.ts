@@ -7,7 +7,9 @@ import appRoutes from '../routes';
 
 export default function setupPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
-    NProgress.start();
+    if( window.location.href.indexOf("#1") === -1 ){ // 减少页面手动输入时再次刷新的进度条显示
+      NProgress.start();
+    }
     const userStore = useUserStore();
 
     async function crossroads() {

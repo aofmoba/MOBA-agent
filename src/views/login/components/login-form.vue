@@ -168,7 +168,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, reactive, onMounted, watch } from 'vue';
+  import { ref, reactive, onMounted, watch, onBeforeMount } from 'vue';
   import { useRouter } from 'vue-router';
   import { Message } from '@arco-design/web-vue';
   import { useI18n } from 'vue-i18n';
@@ -485,13 +485,16 @@
       }
     });
   };
+
+  onBeforeMount(()=>{
+    if ( window.location.href.indexOf("#1") === -1 && window.location.href.indexOf("%231") === -1 ) {
+      window.location.href = `${window.location.href}#1`;
+      window.location.reload();
+    }
+  })
   onMounted(() => {
     invitCode.value = router.currentRoute.value.query.code;
     if( invitCode.value ) exWallet()
-    // if ( window.location.href.indexOf("#reloaded") === -1 ) {
-    //   window.location.href = `${window.location.href}#reloaded`;
-    //   window.location.reload();
-    // }
     // localStorage.removeItem('isLogin');
     // localStorage.removeItem('userLl');
     // localStorage.removeItem('userEm');

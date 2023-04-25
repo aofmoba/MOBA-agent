@@ -19,8 +19,8 @@ const staticData = defineStore('common', {
     updateShowBind(newValue: any){
       this.showbind = newValue;
     },
-    updateRouteActive(){
-      this.isRouteActive = !this.isRouteActive;
+    updateRouteActive(newValue: any){
+      this.isRouteActive = newValue;
     }
   },
 });
