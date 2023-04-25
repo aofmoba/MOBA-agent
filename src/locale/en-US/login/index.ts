@@ -71,4 +71,5 @@ export default {
   'login.no.tips': 'Sorry, you have not been invited to become a dealer!',
 
   'login.out': 'Login has expired, please log in again',
+  'login.metamask.tips': 'The request is already pending, please confirm'
 };

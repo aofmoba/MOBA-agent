@@ -8,7 +8,8 @@ const staticData = defineStore('common', {
       badgeData: [],
       isRefresh: false,
       showbind: false,
-      menuHidden: '' // c-user login show menu: by level
+      menuHidden: '', // c-user login show menu: by level
+      isRouteActive: false,
     };
   },
 
@@ -17,6 +18,9 @@ const staticData = defineStore('common', {
   actions: {
     updateShowBind(newValue: any){
       this.showbind = newValue;
+    },
+    updateRouteActive(){
+      this.isRouteActive = !this.isRouteActive;
     }
   },
 });

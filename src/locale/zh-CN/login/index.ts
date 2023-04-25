@@ -72,4 +72,5 @@ export default {
   'login.no.tips': '抱歉，您未被邀请成为经销商！',
 
   'login.out': '登录已过期，请重新登录',
+  'login.metamask.tips': '请求已经打开，请前往确认'
 };

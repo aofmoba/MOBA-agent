@@ -15,7 +15,7 @@
         :loading="textLoading"
         :size="32"
         tip="loading..."
-        style="width: 100%"
+        style="width: 100%;display: block;"
       >
         <div v-if="textLoading" class="login-type empty"> </div>
         <div v-else>
@@ -67,7 +67,7 @@
           </div>
           <!-- 未注册未带邀请码 -->
           <div v-else class="login-type">
-            <div class="login-form-title">{{ $t('login.no.tips') }}</div>
+            <div class="login-form-title">{{ userInfo.address ? $t('login.no.tips') : $t('login.connect.tips') }}</div>
           </div>
         </div>
       </a-spin>
@@ -168,7 +168,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, reactive, onMounted, watch, onActivated } from 'vue';
+  import { ref, reactive, onMounted, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import { Message } from '@arco-design/web-vue';
   import { useI18n } from 'vue-i18n';
@@ -229,43 +229,52 @@
       noInVisible.value = true;
     } else {
       try {
-        const [accounts] = await ethereum.request({ method: 'eth_requestAccounts' });
-        const web3obj = new Web3((Web3 as any).givenProvider);
-        const res0 = await web3obj.utils.toChecksumAddress(accounts);
-        // eslint-disable-next-line no-multi-assign
-        userInfo.address = userAddress.value = res0;
-        localStorage.setItem('address', res0);
-        await axios
-          .get(`/api/user/getuser?address=${userInfo.address}`)
-          .then((xres: any) => {
-            if (xres.data.code === 200) {
-              isReady.value = 2;
-              logDisable.value = false;
-              textLoading.value = false;
-              if (xres.data.data) {
-                nickna.value = xres.data.data.nikename;
-                level.value = Number(xres.data.data.level);
-                subLevel.value = Number(xres.data.data.SubLevel);
-                // eslint-disable-next-line eqeqeq
-                if (xres.data.data.level == '4') {
-                  userLevel.value = 'agent.level1';
+        const [accounts] = await ethereum.request({ method: 'eth_requestAccounts' })
+        if( accounts ){
+          const web3obj = new Web3((Web3 as any).givenProvider);
+          const res0 = await web3obj.utils.toChecksumAddress(accounts);
+          // eslint-disable-next-line no-multi-assign
+          userInfo.address = userAddress.value = res0;
+          localStorage.setItem('address', res0);
+          await axios
+            .get(`/api/user/getuser?address=${userInfo.address}`)
+            .then((xres: any) => {
+              if (xres.data.code === 200) {
+                isReady.value = 2;
+                logDisable.value = false;
+                textLoading.value = false;
+                if (xres.data.data) {
+                  nickna.value = xres.data.data.nikename;
+                  level.value = Number(xres.data.data.level);
+                  subLevel.value = Number(xres.data.data.SubLevel);
                   // eslint-disable-next-line eqeqeq
-                } else if (xres.data.data.level == '3') {
-                  userLevel.value = 'agent.level2';
-                  // eslint-disable-next-line eqeqeq
-                } else if (xres.data.data.level == '2') {
-                  userLevel.value = 'agent.level3';
-                  // eslint-disable-next-line eqeqeq
-                } else if (xres.data.data.level == '1') {
-                  userLevel.value = 'agent.level4';
+                  if (xres.data.data.level == '4') {
+                    userLevel.value = 'agent.level1';
+                    // eslint-disable-next-line eqeqeq
+                  } else if (xres.data.data.level == '3') {
+                    userLevel.value = 'agent.level2';
+                    // eslint-disable-next-line eqeqeq
+                  } else if (xres.data.data.level == '2') {
+                    userLevel.value = 'agent.level3';
+                    // eslint-disable-next-line eqeqeq
+                  } else if (xres.data.data.level == '1') {
+                    userLevel.value = 'agent.level4';
+                  }
                 }
               }
-            }
-          }).finally(() => {
-            textLoading.value = false;
-          });
+            }).finally(() => {
+              textLoading.value = false;
+            });
+        }else{
+          isReady.value = 0;
+          textLoading.value = false;
+        }
       } catch (error: any) {
-        Message.error(error.message);
+        if( error.code === -32002 && error.message.includes("Request of type 'wallet_requestPermissions' already pending") ){
+          Message.error(t('login.metamask.tips'));
+        }else{
+          Message.error(error.message);
+        }
         isReady.value = 0;
         textLoading.value = false;
       }
@@ -376,7 +385,7 @@
       });
       setTimeout(()=>{
         logDisable.value = false
-      },3000)
+      },1500)
     }
   };
 
@@ -479,6 +488,10 @@
   onMounted(() => {
     invitCode.value = router.currentRoute.value.query.code;
     if( invitCode.value ) exWallet()
+    // if ( window.location.href.indexOf("#reloaded") === -1 ) {
+    //   window.location.href = `${window.location.href}#reloaded`;
+    //   window.location.reload();
+    // }
     // localStorage.removeItem('isLogin');
     // localStorage.removeItem('userLl');
     // localStorage.removeItem('userEm');
@@ -575,7 +588,7 @@
 
     .metamask {
       .login-type {
-        min-height: 104px;
+        min-height: 114px;
         margin-top: -10px;
         padding-bottom: 20px;
 

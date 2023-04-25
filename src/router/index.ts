@@ -13,13 +13,16 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
+      path: '/',
+      redirect: 'login',
+    },
+    Login,
+    {
       name: 'root',
       path: '/',
       component: DefaultLayout,
-      redirect: '/login',
       children: appRoutes,
     },
-    Login,
     {
       path: '/:pathMatch(.*)*',
       name: 'notFound',

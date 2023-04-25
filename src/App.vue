@@ -9,14 +9,12 @@
   import { defineComponent, onMounted } from 'vue';
   import enUS from '@arco-design/web-vue/es/locale/lang/en-us';
   import GlobalSetting from '@/components/global-setting/index.vue';
-  import { staticData, useUserStore } from '@/store';
+  import { staticData } from '@/store';
   import { storeToRefs } from 'pinia';
   import useUser from '@/hooks/user';
   import { useRouter } from 'vue-router';
   import Cookies from 'js-cookie'
   import axios from 'axios';
-  // eslint-disable-next-line import/extensions
-  import Web3 from 'web3/dist/web3.min.js';
   
   
   export default defineComponent({
@@ -25,10 +23,8 @@
     },
     setup() {
       const router = useRouter();
-      const userStore = useUserStore();
       const comStore = staticData();
-      const { userAddress, isRefresh } = storeToRefs(comStore);
-      const web3obj = new Web3((Web3 as any).givenProvider);
+      const { isRefresh } = storeToRefs(comStore);
       const { logout } = useUser();
 
       onMounted(async() => {
