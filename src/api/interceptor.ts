@@ -4,7 +4,6 @@ import { getToken, clearToken } from '@/utils/auth';
 import useUser from '@/hooks/user';
 import { isLogin } from '@/api/user';
 import i18n from '../locale';
-import router from '../router'
 
 const { t } = i18n.global;
 export interface HttpResponse<T = unknown> {
@@ -37,7 +36,7 @@ const afreshRequest = () => {
 axios.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     const token = getToken();
-    const loginApi: Array<string | any> = ['/api/user/logout','/api/user/isLogin','/api/user/doLogin','/api/user/getuser','/api/user/bemail','/api/business/invuser','/api/user/baddress','/api/user/doLoginEmail']
+    const loginApi: Array<string | any> = ['/api/connection/calculateTotalForce','/api/user/logout','/api/user/isLogin','/api/user/doLogin','/api/user/getuser','/api/user/bemail','/api/business/invuser','/api/user/baddress','/api/user/doLoginEmail']
     const index = loginApi.findIndex((item: any) => (config.url as any).includes(item))
     if (token && index < 0 ) {
       if (!(window as any).isRefreshing) {

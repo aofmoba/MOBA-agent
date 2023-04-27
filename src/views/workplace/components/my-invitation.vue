@@ -554,7 +554,7 @@
         perCalculate.value = Number(res.data['personal calculate'])*10000000
       }
     })
-    await axios.get(`/api/user/getuser?address=${address.value}`)
+    axios.get(`/api/user/getuser?address=${address.value}`)
       .then((res: any) => {
         if ( res.data.code === 200 && res.data.data ) {
           editInfo.value.oldName = res.data.data.nikename;
