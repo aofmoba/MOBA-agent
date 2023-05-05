@@ -1,20 +1,19 @@
 # MOBA-agent
 
 ## Docs
-1. [Arco Design Pro for vue](https://arco.design/vue/en-US/docs/start)
-2. [Echarts](https://echarts.apache.org/)
-3. [Mock.js](http://mockjs.com/)
+[Arco Design Pro for vue](https://arco.design/vue/en-US/docs/start)
 
-## Command
+## Install the dependencies
 ```bash
-yarn start
+yarn install
 ```
 
-### build
+### Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
-yarn build
+npm run dev / yarn dev
 ```
 
-## Request
-* development mode，api request response from mock.js
-* production mode, configuration Axios baseURL
+### Build the app for production
+```bash
+npm run build / yarn build
+```
