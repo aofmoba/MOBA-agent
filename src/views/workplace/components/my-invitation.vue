@@ -594,9 +594,7 @@
   // 升级组件
   const upGradeRes = (bol: boolean,succ?: boolean) => {
     upVisible.value = bol
-    console.log(succ);
     if( succ ) {
-      console.log(1);
       axios
       .get(`/api/user/doLogin?address=${address.value}`)
       .then((res: any) => {
@@ -613,11 +611,12 @@
     }
   }
 
-  onMounted(() => {
+  onMounted(async() => {
     address.value = localStorage.getItem('address');
     email.value = localStorage.getItem('userEm');
     level.value = localStorage.getItem('userLl') ? localStorage.getItem('userLl') : '1';
     getHashrate();
+    await axios.get(`/api/user/doLogin?address=${address.value}`)
     getMyInvit();
   });
 

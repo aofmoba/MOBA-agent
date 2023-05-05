@@ -41,7 +41,6 @@
             if( localStorage.getItem('address') == exdata.address && localStorage.getItem('isLogin') == 'true' ) return
             // eslint-disable-next-line eqeqeq
             if( exdata.address && exdata.level !== '1' ){
-              Cookies.set('satoken', exdata.satoken, { expires: 30, path: '', domain: 'node.aof.games' })
               localStorage.setItem('userLl', exdata.level);
               localStorage.setItem('userEm', exdata.email);
               localStorage.setItem('address', exdata.address);
