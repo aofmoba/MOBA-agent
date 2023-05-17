@@ -2,7 +2,6 @@ import contracts from '@/utils/contracts'
 // eslint-disable-next-line import/extensions
 import Web3 from 'web3/dist/web3.min.js'
 
-// const { Web3 } = window as any; // 引用全局的web3 在index.html文件cdn引入<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 const accounts = localStorage.getItem('address');
 
 
