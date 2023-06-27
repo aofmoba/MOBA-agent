@@ -27,11 +27,15 @@
         $t('wallet.item.btn')
       }}</a-button>
     </div>
-    <div class="item ">
+    <div class="item">
       <span class="label">{{ $t('login.update.pwd') }} : </span>
       <div v-if="viewPass" class="view-pass">
         <span>{{ viewbol ? viewPass : '******' }}</span>
-        <icon-eye-invisible v-if="!viewbol" :size="18" @click="viewbol = true"/>
+        <icon-eye-invisible
+          v-if="!viewbol"
+          :size="18"
+          @click="viewbol = true"
+        />
         <icon-eye v-else :size="18" @click="viewbol = false" />
       </div>
       <a-button
@@ -147,7 +151,7 @@
   import { useI18n } from 'vue-i18n';
   import { Message } from '@arco-design/web-vue';
   import useUser from '@/hooks/user';
-  
+
   const emit = defineEmits(['get-user']);
   const { logout } = useUser();
   const { t } = useI18n();
@@ -236,7 +240,7 @@
     axios
       .get(`/api/user/getuser?address=${address.value}`)
       .then((res: any) => {
-        const resData: any = res.data.data
+        const resData: any = res.data.data;
         if (res.data.code === 200 && resData) {
           // cardData.val.balance = (Math.floor(resData.personalrewards * 100) / 100).toFixed(2) || '0.00';
           cardData.val.balance = resData.personalrewards || '0.00';
@@ -293,8 +297,6 @@
     });
   };
 
-
-
   // 修改密码
   const pwdVisible = ref(false);
   const rulePwdform: any = ref(null);
@@ -342,14 +344,14 @@
     });
   };
 
-  const viewbol = ref<boolean>(false)
+  const viewbol = ref<boolean>(false);
   const getPass = () => {
-    axios.get('/api//user/getPass').then((res: any)=>{
-      if( res.data.code === 200 ){
-        viewPass.value = res.data.data
+    axios.get('/api/user/getPass').then((res: any) => {
+      if (res.data.code === 200) {
+        viewPass.value = res.data.data;
       }
-    })
-  }
+    });
+  };
 
   // 轮询获取余额
   let bTimer: any = null;
@@ -366,7 +368,7 @@
     address.value = localStorage.getItem('address');
     email.value = localStorage.getItem('userEm');
     getLevel();
-    getPass()
+    getPass();
   });
 </script>
 
@@ -375,11 +377,12 @@
     padding: 30px 0;
     border: 1px solid #e5e8ef;
     border-radius: 4px;
+
     .item {
       display: flex;
       align-items: center;
       padding: 14px 30px;
-      transition: all .2s ease;
+      transition: all 0.2s ease;
 
       .label {
         padding-right: 18px;
@@ -392,7 +395,7 @@
         font-size: 18px;
 
         .load {
-          margin-bottom: 0px !important;
+          margin-bottom: 0 !important;
         }
       }
 
@@ -410,11 +413,13 @@
       box-shadow: 1px 1px 3px #e5e8ef;
     }
   }
-  .view-pass{
+
+  .view-pass {
     margin-right: 23px;
-    svg{
-      cursor: pointer;
+
+    svg {
       margin-left: 4px;
+      cursor: pointer;
     }
   }
 </style>
